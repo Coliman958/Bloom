@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %} 
+
+<h1 style="text-align: center; color: #ffff00;">Add Category</h1>
+
+{% if user.is_authenticated %}
+
+    <div class="container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Add</button>
+        </form>
+    </div>
+{% else %}
+
+<h1 style="color: red; text-align: center;">You are Not Allowed to make a post, You need to register first</h1>
+
+{% endif %}
+
+
+
+{% endblock %}

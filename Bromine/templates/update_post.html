@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %} 
+
+<h1 style="text-align: center; color: #ffff00;">Update Post</h1>
+
+{% if user.is_authenticated %}
+    {% if user.id == object.author.id %}
+
+    <div class="container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+    
+{% else %}
+
+<h1 style="color: red; text-align: center;">You are Not Allowed to update a post, You need to register first</h1>
+    {% endif %}
+{% endif %}
+
+
+
+{% endblock %}

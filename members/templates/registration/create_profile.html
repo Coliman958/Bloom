@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %} 
+<hr>
+<br><br>
+
+
+<h1 style="text-align: center; color: #ffff00;">Create Your Profile</h1> 
+
+
+
+<hr>
+<br>
+
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Create</button>
+        </form>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+
+  {% if user.is_authenticated %}
+  <br>
+    <h1 style="color: white; text-align: center;">Welcome, {{user.username}}</h1><hr>
+
+{% else %}
+    <h1 style="text-align: center; color: white;">Welcome, Guest</h1><hr>
+{% endif %} 
+{% for post in object_list reversed %}
+        
+  <div style="width: 1000px; margin-left: 50px;" class="container">
+  <div style="border: 1px solid white; background-color: aliceblue; margin-top: 15px; border-radius: 10px; padding: 10px;">                                                                 
+    <a style="text-decoration: none; color: #009933; " href="{% url 'article_details' post.pk %}"><h1>{{post.title}} | <a style="color: red; font-size: 20px;" href="#">{{post.category}}</a></h1></a> 
+    <hr>
+        <h5>{{post.author.first_name}} {{post.author.last_name}} | {{post.date_made}}</h5>
+        <p>{{post.content|safe|truncatewords:16}}</p>
+      
+  </div>
+  </div>
+
+  {% endfor %}
+
+{% endblock %}
+           
+            
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+

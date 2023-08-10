@@ -1,0 +1,139 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %} 
+
+  
+  <div style="width: 1000px; margin-left: 50px;" class="container">
+  <div style="border: 1px solid white; background-color: aliceblue; margin-top: 15px; border-radius: 10px; padding: 10px;">                                                                 
+    <h1 style="text-decoration: none; color: #000000; font-weight: bold;">{{object.title}}</h1>
+        <hr>
+        <h5 >{{object.author.first_name}} {{object.author.last_name}} | {{object.date_made}}</h5>
+        <p>{{object.content|safe}}</p>
+
+        <br><br>
+        
+        {% if user.is_authenticated %}
+          {% if user.id == object.author.id %}
+          
+          <a style="text-decoration: none;" class="btn btn-success" href="{% url 'update_post' object.pk %}">Update Post</a>
+          <a style="text-decoration: none;" class="btn btn-danger" href="{% url 'delete_post' object.pk %}">Delete Post</a>
+          
+          {% endif %}
+          
+        {% endif %}
+  <hr>
+
+  {% if user.is_authenticated %}
+    <form action="{% url 'like_post' object.pk %}" method="POST">
+      {% csrf_token %}
+      <button class="btn btn-success" type="submit" name="post_id" value="{{object.id}}">Like(s)
+        <span style="color: #ffffff; background-color: blue; font-size: large; font-weight: bold;" class="badge text-bg-secondary">{{total_likes}}</span>
+      </button> {{total_likes}} Likes
+
+    </form>
+  {% endif %}
+
+  </div>
+  <br>
+
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+
+      <div class="col-md-4">
+        {% if object.author.profile.profile_photo %}
+        <a href="{% url 'profile' object.author.profile.id %}"><img src="{{object.author.profile.profile_photo.url}}" class="img-fluid rounded-start" alt="..."></a>
+        {% else %}
+          <img src="{% static 'image/default_image.png' %}" class="img-fluid rounded-start" alt="">
+        {% endif %}
+      </div>
+
+      
+
+      <div class="col-md-8">
+        <div class="card-body">
+          {% if object.author.profile.bio %}
+            <h5 class="card-title">{{object.author.first_name}} {{object.author.last_name}} |
+              {% if user.is_authenticated %}
+                {% if user.id == object.author.id %}
+              <a href="{% url 'edit_profile_setting' %}">Profile Settings</a>
+                {% endif %}
+              {% endif %}
+             </h5>
+        
+           <p class="card-text">{{object.author.profile.bio}} </p>
+
+          {% else %}
+           <h1>Hello, <span style="color: blue;">{{object.author.first_name}} {{object.author.last_name}}</span>  </h1>
+           <h3>You do not have a profile</h3> 
+           <a style="text-decoration: none;" href="#"><h4>click me to create one for yourself</h4></a>
+          {% endif %}
+
+          <button style="background-color: aqua; border-radius: 10px;"><a style="color: #660066; font-weight: bold; font-size: 30px; text-decoration: none;" href="{{object.author.profile.twitter_url}}">twitter</a></button>
+          <button style="background-color: aqua; border-radius: 10px;"><a style="color: #660066; font-weight: bold; font-size: 30px; text-decoration: none;" href="{{object.author.profile.facebook_url}}">facebook</a></button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Comments...</h1>
+  
+  <div style="border-radius: 10px;"  class="container">
+    <br>
+    <div>
+      {% if not object.comments.all %}
+  
+        <h3>No comments yet, <a href="{% url 'add_comment' object.pk %}">Add Comment</a></h3>
+
+        {% else %}
+        <h3><a style="color: #660066;" href="{% url 'add_comment' object.pk %}">Add Comment</a></h3>
+        <br>
+          {% for comm in object.comments.all %}
+          <strong>
+            {{comm.name}} | {{comm.date_posted}}
+          </strong>
+          
+          <p>{{comm.body}}</p>
+
+          {% endfor %}
+
+        {% endif %}
+       <h4><a style="color: #660066;" href="{% url 'add_comment' object.pk %}">Add Comment</a></h4>
+      <br>
+    </div>
+  </div>
+  
+    
+  
+
+  
+  
+
+
+</div>
+
+  
+
+
+
+{% endblock %}
+
+           
+            
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+

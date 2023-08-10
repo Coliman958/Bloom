@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %} 
+<br>
+<h1 style="text-align: center; color: #ffff00;">Add A Blog Post</h1>
+
+{% if user.is_authenticated %}
+
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Post</button>
+        </form>
+    </div>
+
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById('jay').value = name;
+    </script>
+{% else %}
+
+<h1 style="color: red; text-align: center;">You are Not Allowed to make a post, You need to register first</h1>
+
+{% endif %}
+
+
+
+{% endblock %}
