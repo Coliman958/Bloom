@@ -1,5 +1,5 @@
 from django.urls import path
-from members import views
+from Members import views
 from .views import DisplayProfileView, EditProfileView, CreateProfileView,UserRegistrationView, ProfileSettingsView
 from django.contrib.auth import views as auth_views
 
